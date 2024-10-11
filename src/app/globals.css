@@ -1,33 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  
+@layer components {
+    .transition1 {
+      @apply transition-all ease-in-out duration-500;
+    }
+    .transition2 {
+      @apply transition-all ease-in-out duration-300;
+    }
+    .transition3 {
+      @apply transition-all ease-in-out duration-150;
+    }
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  html {
+    font-family: var(--font-urbanist);
   }
+
+.pagination {
+  @apply flex items-center mt-5 justify-center;
 }
+
+.page-item {
+  @apply mx-1;
+}
+
+.page-link {
+  @apply py-1 px-3 border-2 border-primary rounded-lg hover:bg-primary hover:text-white ;
+}
+
+.previous-item {
+  @apply mx-1;
+}
+
+.previous-link {
+  @apply py-2 px-4 border border-primary rounded-lg hover:bg-primary text-primary font-semibold hover:text-white;
+}
+
+.next-item {
+  @apply mx-1;
+}
+
+.next-link {
+  @apply py-2 px-4 border border-primary rounded-lg hover:bg-primary text-primary font-semibold hover:text-white;
+}
+
+.break-item {
+  @apply mx-1;
+}
+
+.break-link {
+  @apply py-2 px-2 text-black;
+}
+
+
