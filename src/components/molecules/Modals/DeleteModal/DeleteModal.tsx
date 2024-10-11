@@ -9,10 +9,10 @@ import { Trash2, TriangleAlert } from "lucide-react";
 const DeleteModal = ({
   text,
   close,
-  type,
+
   handleDelete,
 }: {
-  type: "delete" | "update";
+  
   close: () => void;
   handleDelete: () => void;
   text?: string;

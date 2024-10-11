@@ -7,21 +7,21 @@ import { useParams, useRouter } from "next/navigation";
 import AboutUser from "@/components/organisms/Overview/AboutUser";
 import Modal from "@/components/molecules/Modals/ModalBackground";
 import DeleteModal from "@/components/molecules/Modals/DeleteModal/DeleteModal";
-import { Button,  } from "@chakra-ui/react";
-import { useQueryClient,useQuery } from "@tanstack/react-query";
+import { Button } from "@chakra-ui/react";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import useStudents from "@/hooks/useStudents";
 
 const SingleUser = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const typeRef = useRef<"delete" | "update">("delete");
-  const params = useParams()
-  const {getSingleStudent ,data} = useStudents();
- useEffect(()=>{
-getSingleStudent(params.id)
- },[])
+  const typeRef = useRef<"delete" | "edit">("delete");
+  const params = useParams();
+  const { getSingleStudent, data } = useStudents();
+  useEffect(() => {
+    getSingleStudent(params.id);
+  }, []);
 
-  console.log(data)
+  console.log(data);
   return (
     <section className="">
       <div className="mb-4 flex flex-col gap-y-3 lg:gap-y-0 lg:items-center justify-between lg:flex-row">
@@ -74,33 +74,21 @@ getSingleStudent(params.id)
         <div className="flex flex-col items-center lg:justify-between lg:flex-row gap-y-4 lg:gap-y-0">
           <div>Reg No:{data?.registrationNumber}</div>
 
-          <Button
-            className="flex h-10 w-auto items-center gap-2 bg-lightpink active:bg-primary"
-            onClick={() => {
-              setOpen(true);
-              typeRef.current = "delete";
-            }}
-          >
-            Delete
-            <Trash2 size={12} />
-            {/* {isLoading ? <Spinner size="2" loading={true} /> : <>Log In</>} */}
-          </Button>
+          
         </div>
         <div className="mt-5 flex lg:flex-row flex-col-reverse w-full items-start gap-5">
           {/* <div className="w-full  p-2 lg:w-1/4">
               <ProfileDetails />
             </div> */}
-          <AboutUser name ={data.name} dob={data.dob} gpa={data.gpa} major={data.major}/>
+          <AboutUser
+            name={data.name}
+            dob={data.dob}
+            gpa={data.gpa}
+            major={data.major}
+          />
         </div>
       </div>
-      <Modal open={open} setOpen={() => setOpen(false)}>
-        <DeleteModal
-          type={typeRef.current}
-          close={() => setOpen(false)}
-          handleDelete={() => {}}
-          text="Do you to permanently delete this user Anthony Gordon? "
-        />
-      </Modal>
+      
     </section>
   );
 };

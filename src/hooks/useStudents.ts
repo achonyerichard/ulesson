@@ -79,15 +79,20 @@ const useStudents = () => {
       setIsLoading(false);
     }
   };
-  const editStudent = async (data: any) => {
+  const editStudent = async (data: any,id: any,refetch:()=>{},close:any) => {
+    setIsLoading(true)
     try {
-      const response = await axios.post(`/api/auth/login`, data, {
+      const response = await axios.put(`/api/student/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       if (response.data) {
+        setIsLoading(false)
+        refetch()
+        close()
         return response.data;
+        
       }
 
       // subscribeUser(response.data.data.token);

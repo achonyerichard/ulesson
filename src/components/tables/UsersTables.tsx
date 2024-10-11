@@ -8,11 +8,13 @@ import ReactPaginate from "react-paginate";
 import Modal from "../molecules/Modals/ModalBackground";
 import DeleteModal from "../molecules/Modals/DeleteModal/DeleteModal";
 import { Spinner, useToast } from "@chakra-ui/react";
+import { Edit2Icon } from "lucide-react";
+import EditModal from "../molecules/Modals/EditModal.tsz/EditModal";
 
 const UsersTables = () => {
   const toast = useToast();
   const [open, setOpen] = useState(false);
-  const typeRef = useRef<"delete" | "update">("delete");
+  const [modalType, setModalType] = useState<"delete" | "edit" | "">("");
   const idRef = useRef<string>("");
   const { addStudent, getStudent, deleteStudent } = useStudents();
   const queryClient = useQueryClient();
@@ -53,7 +55,7 @@ const UsersTables = () => {
   console.log(data);
   let itemsPerPage = 4;
   const [itemOffset, setItemOffset] = useState(0);
-
+  const [item, setItem] = useState({});
   // Simulate fetching items from another resources.
   // (This could be items from props; or items loaded in a local state
   // from an API endpoint with useEffect and useState)
@@ -72,14 +74,14 @@ const UsersTables = () => {
   };
   if (isFetching) {
     <div className="flex justify-center items-center w-full">
-    <Spinner
-      thickness="4px"
-      speed="0.65s"
-      emptyColor="gray.200"
-      color="blue.500"
-      size="xl"
-    />
-  </div>
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    </div>;
   }
   return (
     <div>
@@ -214,9 +216,21 @@ const UsersTables = () => {
                       <button
                         onClick={() => {
                           //handleDeleteStudent()
+                          setItem(item);
                           idRef.current = item._id?.toString()!;
                           setOpen(true);
-                          typeRef.current = "delete";
+                          setModalType("edit");
+                        }}
+                        className={`whitespace-no-wrap text-md text-Hwhite cursor-pointer rounded-md p-2 font-semibold`}
+                      >
+                        <Edit2Icon color="green" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          //handleDeleteStudent()
+                          idRef.current = item._id?.toString()!;
+                          setOpen(true);
+                          setModalType("delete");
                         }}
                         className={`whitespace-no-wrap text-md text-Hwhite cursor-pointer rounded-md p-2 font-semibold`}
                       >
@@ -248,12 +262,15 @@ const UsersTables = () => {
           )}
         </table>
         <Modal open={open} setOpen={() => setOpen(false)}>
-          <DeleteModal
-            type={typeRef.current}
-            close={() => setOpen(false)}
-            handleDelete={handleDeleteStudent}
-            text="Do you to permanently delete this student? "
-          />
+          {modalType === "edit" ? (
+            <EditModal users={item} id={idRef} setOpen={() => setOpen(false)} />
+          ) : (
+            <DeleteModal
+              close={() => setOpen(false)}
+              handleDelete={handleDeleteStudent}
+              text="Do you to permanently delete this student? "
+            />
+          )}
         </Modal>
       </div>
       <ReactPaginate
