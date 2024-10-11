@@ -15,13 +15,15 @@ const NavBar = () => {
       >
         Dashboard
       </h2>
-      {/* <Image
+    
+      <Image
         src="/images/logo.png"
         width={500}
         height={500}
         alt="auth_logo"
-        className="mb-10 h-auto max-w-[189px] rounded-3xl object-cover"
-      />{" "} */}
+         className="block h-10 w-10 xl:hidden xl:h-auto xl:w-auto"
+         onClick={() => setOpen(true)}
+      />{" "}
       <Image
         src="/images/icons/user_profile.svg"
         alt=""
